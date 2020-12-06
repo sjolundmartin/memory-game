@@ -4,7 +4,7 @@ const colors = {
   hidden: 'lightgray',
   matched: 'lightgreen',
   wrong: 'lightcoral',
-  turned: 'deepskyblue',
+  candidate: 'deepskyblue',
 };
 
 const Tile = (props) => {
@@ -12,7 +12,7 @@ const Tile = (props) => {
     <>
       <button
         className="tile"
-        style={{ backgroundColor: colors['hidden'] }}
+        style={{ backgroundColor: colors[props.status] }}
         onClick={() => console.log(props.value)}
       ></button>
     </>
