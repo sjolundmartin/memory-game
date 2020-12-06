@@ -1,3 +1,4 @@
+//Array construction
 const utils = {
   //Creates and returns a list of (pairs) number of integer pairs between 0 and 100
   createNumPairs: (pairs) => {
@@ -7,6 +8,7 @@ const utils = {
       memArray.push(temp);
       memArray.push(temp);
     }
+
     return shuffle(memArray);
   },
 
