@@ -1,13 +1,24 @@
-:root {
-  --color-main: #333;
+.container {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
+.body {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: thin solid #ddd;
+  text-align: center;
+  font-size: 1.5em;
 }
 
-body {
-  color: var(--color-main);
+.tiles {
+  display: grid;
+  margin: auto;
+  grid-template-rows: 100px 100px 100px 100px;
+  grid-template-columns: 100px 100px 100px 100px;
+  grid-gap: 5px;
+}
+
+.tile {
 }
