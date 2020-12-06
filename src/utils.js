@@ -1,18 +1,24 @@
 //Array construction
 const utils = {
-  //Creates and returns a list of (pairs) number of integer pairs between 0 and 100
+  //Creates and returns a list of (pairs) number of unique integer pairs between 0 and 100
   createNumPairs: (pairs) => {
     let memArray = [];
     for (var i = 0; i < pairs; i++) {
-      var temp = Math.floor(Math.random() * 101);
-      memArray.push(temp);
-      memArray.push(temp);
+      var uniqueNumFound = false;
+      while (!uniqueNumFound) {
+        var temp = Math.floor(Math.random() * 101);
+        if (!memArray.includes(temp)) {
+          memArray.push(temp);
+          memArray.push(temp);
+          uniqueNumFound = true;
+        }
+      }
     }
 
     return shuffle(memArray);
   },
 
-  //Creates and returns a list of (pairs) number of string pairs between 0 and 100
+  //Creates and returns a list of (pairs) number of unique string pairs between 0 and 100
   createStringPairs: (pairs) => {
     let memArray = [];
     var tempArray = shuffle(words);
