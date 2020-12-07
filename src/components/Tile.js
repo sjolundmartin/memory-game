@@ -13,7 +13,7 @@ const Tile = (props) => {
       <button
         className="tile"
         style={{ backgroundColor: colors[props.status] }}
-        onClick={() => props.onClick(props.index, props.value)}
+        onClick={() => props.onClick(props.index, props.value, props.status)}
       ></button>
     </>
   );

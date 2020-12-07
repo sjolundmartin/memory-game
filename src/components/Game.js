@@ -4,56 +4,48 @@ import utils from '../utils';
 import Tile from './Tile';
 
 const Game = (props) => {
-  const [matchedTiles, setMatchedTiles] = useState([1, 4]);
-  const [candidateTiles, setCandidateTiles] = useState({
-    keys: [],
-    values: [],
-  });
+  const [matchedTiles, setMatchedTiles] = useState([]);
+  const [candidateKeys, setCandidateKeys] = useState([]);
+  const [candidateValues, setCandidateValues] = useState([]);
 
-  const onTileClick = (key, value) => {
-    if (matchedTiles.includes(key) || candidateTiles.keys.includes(key)) {
+  const isAMatch = candidateValues[0] === candidateValues[1];
+
+  const onTileClick = (key, value, status) => {
+    if (status === 'matched' || status === 'candidate') {
       console.log('already clicked');
       return;
     }
-    if (candidateTiles.keys.length <= 1) {
-      setCandidateTiles((prevState) => ({
-        keys: [...prevState.keys, key],
-        values: [...prevState.values, value],
-      }));
+
+    const newCandidateKeys = candidateKeys.concat([key]);
+    const newCandidateValues = candidateValues.concat([value]);
+
+    if (candidateKeys.length <= 1) {
+      setCandidateKeys(newCandidateKeys);
+      setCandidateValues(newCandidateValues);
     }
   };
 
   useEffect(() => {
-    if (candidateTiles.keys.length == 2) {
-      if (candidateTiles.values[0] == candidateTiles.values[1]) {
-        console.log('match');
+    if (candidateKeys.length == 2) {
+      if (isAMatch) {
+        console.log('a match!');
+        const newMatchedTiles = matchedTiles.concat(candidateKeys);
+        setMatchedTiles(newMatchedTiles);
       } else {
         console.log('no match');
       }
+      setCandidateKeys([]);
+      setCandidateValues([]);
     }
-  }, [candidateTiles]);
-
-  //   const checkIfMatch = () => {
-  //     if (candidateTiles.keys.length == 2) {
-  //       if (candidateTiles[0] === candidateTiles[1]) {
-  //         console.log('matched');
-  //         this.setState((prevState) => ({
-  //           matchedTiles: [...prevState.matchedTiles, ...candidateTiles],
-  //         }));
-  //       }
-  //     }
-  //   };
+  });
 
   const tileStatus = (tileKey) => {
     if (matchedTiles.includes(tileKey)) {
       return 'matched';
     }
-    if (candidateTiles.keys.includes(tileKey)) {
+    if (candidateKeys.includes(tileKey)) {
       return 'candidate';
     }
-    // if (candidateTiles.keys.length == 2) {
-    //   //kolla om match och lägg till i matched eller returnera 'wrong'
-    // }
     return 'hidden';
   };
 
@@ -86,6 +78,20 @@ const Game = (props) => {
           ))}
         </div>
       </div>
+      <button onClick={() => console.log('matchedTiles', matchedTiles)}>
+        matchedTiles
+      </button>
+      <button onClick={() => console.log('candidateKeys', candidateKeys)}>
+        candidateKeys
+      </button>
+      <button onClick={() => onTileClick}>click</button>
+      <button
+        onClick={() =>
+          console.log('candidateKeys length', candidateKeys.length)
+        }
+      >
+        candidateKeyslength
+      </button>
     </div>
   );
 };
