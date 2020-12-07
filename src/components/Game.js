@@ -6,8 +6,8 @@ import Tile from './Tile';
 const Game = (props) => {
   const [matchedTiles, setMatchedTiles] = useState([1, 4]);
   const [candidateTiles, setCandidateTiles] = useState({
-    keys: [200],
-    values: ['test'],
+    keys: [],
+    values: [],
   });
 
   const onTileClick = (key, value) => {
@@ -23,13 +23,15 @@ const Game = (props) => {
     }
   };
 
-  //   useEffect(() => {
-  //     if (candidateTiles.keys.lengt == 2) {
-  //       if (candidateTiles.values[0] == candidateTiles.values[1]) {
-  //         console.log('matched');
-  //       }
-  //     }
-  //   }, [candidateTiles]);
+  useEffect(() => {
+    if (candidateTiles.keys.length == 2) {
+      if (candidateTiles.values[0] == candidateTiles.values[1]) {
+        console.log('match');
+      } else {
+        console.log('no match');
+      }
+    }
+  }, [candidateTiles]);
 
   //   const checkIfMatch = () => {
   //     if (candidateTiles.keys.length == 2) {
@@ -42,11 +44,11 @@ const Game = (props) => {
   //     }
   //   };
 
-  const tileStatus = (tile) => {
-    if (matchedTiles.includes(tile)) {
+  const tileStatus = (tileKey) => {
+    if (matchedTiles.includes(tileKey)) {
       return 'matched';
     }
-    if (candidateTiles.keys.includes(tile)) {
+    if (candidateTiles.keys.includes(tileKey)) {
       return 'candidate';
     }
     // if (candidateTiles.keys.length == 2) {
@@ -61,6 +63,10 @@ const Game = (props) => {
     }
     if (props.pairType == 'num') {
       return utils.createNumPairs(props.noOfPairs);
+    }
+    //All tiles have the same value
+    if (props.pairType == 'easy') {
+      return utils.createEasyMode(props.noOfPairs);
     }
   };
 

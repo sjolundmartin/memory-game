@@ -6,7 +6,7 @@ const utils = {
     for (var i = 0; i < pairs; i++) {
       var uniqueNumFound = false;
       while (!uniqueNumFound) {
-        var temp = Math.floor(Math.random() * 101);
+        var temp = Math.floor(Math.random() * 17);
         if (!memArray.includes(temp)) {
           memArray.push(temp);
           memArray.push(temp);
@@ -28,6 +28,10 @@ const utils = {
     }
 
     return shuffle(memArray);
+  },
+
+  createEasyMode: (pairs) => {
+    return Array(pairs * 2).fill('easy');
   },
 };
 
