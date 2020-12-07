@@ -29,9 +29,9 @@ const utils = {
 
     return shuffle(memArray);
   },
-
+  //Returns a list of (pairs-1) number of identical string pairs and two unidentical string at the and
   createEasyMode: (pairs) => {
-    return Array(pairs * 2).fill('easy');
+    return [...Array((pairs - 1) * 2).fill('easy'), ...['a', 'b']];
   },
 };
 
