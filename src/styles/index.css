@@ -19,3 +19,12 @@
   grid-template-columns: 100px 100px 100px 100px;
   grid-gap: 5px;
 }
+
+.game-done h3 {
+  margin: 10px 0;
+  color: green;
+}
+
+.play-again-button {
+  margin-bottom: 20px;
+}

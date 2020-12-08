@@ -1,5 +1,6 @@
 import React from 'react';
 import useGameState from '../useGameState';
+import PlayAgain from './PlayAgain';
 
 import Tile from './Tile';
 
@@ -12,6 +13,8 @@ const Game = (props) => {
     tiles,
     setGameState,
   } = useGameState(props.type, props.noOfPairs);
+
+  const gameIsDone = matchedTiles.length === props.noOfPairs * 2;
 
   //Logic when a tile in the UI is clicked
   const onTileClick = (key, value, status) => {
@@ -43,6 +46,7 @@ const Game = (props) => {
     <div className="container">
       <div className="body">
         <h2>Memory Game</h2>
+        {gameIsDone ? <PlayAgain /> : null}
         <div className="tiles">
           {tiles.current.map((value, index) => (
             <Tile
