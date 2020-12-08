@@ -38,7 +38,7 @@ const useGameState = (type, noOfPairs) => {
       setCandidateKeys([]);
       setCandidateValues([]);
     }
-  });
+  }, [candidateKeys, isAMatch, matchedTiles]);
 
   //Returns the comparison of two candidateValues as Boolean
   const isAMatch = candidateValues[0] === candidateValues[1];
