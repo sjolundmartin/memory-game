@@ -14,7 +14,9 @@ const Tile = (props) => {
         className="tile"
         style={{ backgroundColor: colors[props.status] }}
         onClick={() => props.onClick(props.index, props.value, props.status)}
-      ></button>
+      >
+        {props.status != 'hidden' ? props.value : null}
+      </button>
     </>
   );
 };

@@ -4,30 +4,34 @@ import utils from '../utils';
 
 import Tile from './Tile';
 
+//Based on the type of game passed by the parent, fetches an array of tile values from ../utils.
+const createTileArray = (type, noOfPairs) => {
+  if (type == 'string') {
+    return utils.createStringPairs(noOfPairs);
+  }
+  if (type == 'num') {
+    return utils.createNumPairs(noOfPairs);
+  }
+  //All tiles have the same value
+  if (type == 'easy') {
+    return utils.createEasyMode(noOfPairs);
+  }
+};
+
 const Game = (props) => {
+  //STATES
   const [matchedTiles, setMatchedTiles] = useState([]);
   const [candidateKeys, setCandidateKeys] = useState([]);
   const [candidateValues, setCandidateValues] = useState([]);
-
-  const createTileArray = () => {
-    if (props.type == 'string') {
-      return utils.createStringPairs(props.noOfPairs);
-    }
-    if (props.type == 'num') {
-      return utils.createNumPairs(props.noOfPairs);
-    }
-    //All tiles have the same value
-    if (props.type == 'easy') {
-      return utils.createEasyMode(props.noOfPairs);
-    }
-  };
-
+  const [wrongPair, setWrongPair] = useState([]);
   const tiles = useRef([...createTileArray(props.type, props.noOfPairs)]);
 
+  //Returns the comparison of two candidateValues as Boolean
   const isAMatch = candidateValues[0] === candidateValues[1];
 
+  //Logic when a tile in the UI is clicked
   const onTileClick = (key, value, status) => {
-    console.log(value, tiles);
+    console.log(value);
     if (status === 'matched' || status === 'candidate') {
       console.log('already clicked');
       return;
@@ -42,6 +46,8 @@ const Game = (props) => {
     }
   };
 
+  //Checks if there are two tiles selected and puts them in matchedTiles if they match. Then clears candidateValues and candidateKeys.
+  //The function runs when onTileClick is finished.
   useEffect(() => {
     if (candidateKeys.length == 2) {
       if (isAMatch) {
@@ -49,16 +55,23 @@ const Game = (props) => {
         const newMatchedTiles = matchedTiles.concat(candidateKeys);
         setMatchedTiles(newMatchedTiles);
       } else {
-        console.log('match');
+        setWrongPair(candidateKeys);
+        setTimeout(() => {
+          setWrongPair([]);
+        }, 1000);
       }
       setCandidateKeys([]);
       setCandidateValues([]);
     }
   });
 
+  //Returns the status used by the Tile component.
   const tileStatus = (tileKey) => {
     if (matchedTiles.includes(tileKey)) {
       return 'matched';
+    }
+    if (wrongPair.includes(tileKey)) {
+      return 'wrong';
     }
     if (candidateKeys.includes(tileKey)) {
       return 'candidate';
@@ -82,20 +95,6 @@ const Game = (props) => {
           ))}
         </div>
       </div>
-      <button onClick={() => console.log('matchedTiles', matchedTiles)}>
-        matchedTiles
-      </button>
-      <button onClick={() => console.log('candidateKeys', candidateKeys)}>
-        candidateKeys
-      </button>
-      <button onClick={() => onTileClick}>click</button>
-      <button
-        onClick={() =>
-          console.log('candidateKeys length', candidateKeys.length)
-        }
-      >
-        candidateKeyslength
-      </button>
     </div>
   );
 };
