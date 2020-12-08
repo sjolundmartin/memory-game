@@ -46,7 +46,7 @@ const Game = (props) => {
     <div className="container">
       <div className="body">
         <h2>Memory Game</h2>
-        {gameIsDone ? <PlayAgain /> : null}
+        {gameIsDone ? <PlayAgain onClick={props.startNewGame} /> : null}
         <div className="tiles">
           {tiles.current.map((value, index) => (
             <Tile
