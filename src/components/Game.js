@@ -31,9 +31,7 @@ const Game = (props) => {
 
   //Logic when a tile in the UI is clicked
   const onTileClick = (key, value, status) => {
-    console.log(value);
     if (status === 'matched' || status === 'candidate') {
-      console.log('already clicked');
       return;
     }
 
@@ -51,7 +49,6 @@ const Game = (props) => {
   useEffect(() => {
     if (candidateKeys.length == 2) {
       if (isAMatch) {
-        console.log('match');
         const newMatchedTiles = matchedTiles.concat(candidateKeys);
         setMatchedTiles(newMatchedTiles);
       } else {
