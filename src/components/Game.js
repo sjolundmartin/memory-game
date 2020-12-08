@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+//import tileArrayMaker from '../tileArrayMaker';
 import utils from '../utils';
 
 import Tile from './Tile';
@@ -8,9 +9,25 @@ const Game = (props) => {
   const [candidateKeys, setCandidateKeys] = useState([]);
   const [candidateValues, setCandidateValues] = useState([]);
 
+  const createTileArray = () => {
+    if (props.type == 'string') {
+      return utils.createStringPairs(props.noOfPairs);
+    }
+    if (props.type == 'num') {
+      return utils.createNumPairs(props.noOfPairs);
+    }
+    //All tiles have the same value
+    if (props.type == 'easy') {
+      return utils.createEasyMode(props.noOfPairs);
+    }
+  };
+
+  const tiles = useRef([...createTileArray(props.type, props.noOfPairs)]);
+
   const isAMatch = candidateValues[0] === candidateValues[1];
 
   const onTileClick = (key, value, status) => {
+    console.log(value, tiles);
     if (status === 'matched' || status === 'candidate') {
       console.log('already clicked');
       return;
@@ -28,11 +45,11 @@ const Game = (props) => {
   useEffect(() => {
     if (candidateKeys.length == 2) {
       if (isAMatch) {
-        console.log('a match!');
+        console.log('match');
         const newMatchedTiles = matchedTiles.concat(candidateKeys);
         setMatchedTiles(newMatchedTiles);
       } else {
-        console.log('no match');
+        console.log('match');
       }
       setCandidateKeys([]);
       setCandidateValues([]);
@@ -49,25 +66,12 @@ const Game = (props) => {
     return 'hidden';
   };
 
-  const createTileArray = () => {
-    if (props.pairType == 'string') {
-      return utils.createStringPairs(props.noOfPairs);
-    }
-    if (props.pairType == 'num') {
-      return utils.createNumPairs(props.noOfPairs);
-    }
-    //All tiles have the same value
-    if (props.pairType == 'easy') {
-      return utils.createEasyMode(props.noOfPairs);
-    }
-  };
-
   return (
     <div className="container">
       <div className="body">
         <h2>Memory Game</h2>
         <div className="tiles">
-          {createTileArray().map((value, index) => (
+          {tiles.current.map((value, index) => (
             <Tile
               key={index}
               index={index}

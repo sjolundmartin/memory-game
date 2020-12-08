@@ -3,7 +3,7 @@ import Game from './Game';
 
 export function App() {
   const noOfPairs = 8,
-    type = 'easy';
+    type = 'string';
 
-  return <Game noOfPairs={noOfPairs} pairType={type} />;
+  return <Game noOfPairs={noOfPairs} type={type} />;
 }
